@@ -7,7 +7,7 @@ module.exports = (env) => {
     entry: path.resolve(__dirname, 'src/index.js'),
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: 'js/[name].[contenthash].js',
+      filename: 'js/bundle.[contenthash].js',
     },
     mode: env,
     module: {
