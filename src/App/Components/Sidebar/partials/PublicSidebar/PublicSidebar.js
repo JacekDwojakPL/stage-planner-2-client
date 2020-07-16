@@ -9,15 +9,7 @@ const PublicSidebar = ({ login }) => {
         <Link to="stage-plans">My plans</Link>
       </li>
       <li>
-        <a
-          onClick={(event) => {
-            event.preventDefault();
-
-            login();
-          }}
-        >
-          Login
-        </a>
+        <Link to="login">Login</Link>
       </li>
     </>
   );
