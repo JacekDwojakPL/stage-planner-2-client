@@ -2,6 +2,7 @@ import { useReducer } from 'react';
 
 const reducer = (state, action) => {
   if (action.type === 'LOGIN') {
+    console.log('PAYLOAD', action.payload);
     return { isAuthenticated: true };
   }
 
@@ -14,8 +15,8 @@ const reducer = (state, action) => {
 const useAuthentication = () => {
   const [state, dispatch] = useReducer(reducer, { isAuthenticated: false });
 
-  const login = () => {
-    dispatch({ type: 'LOGIN' });
+  const login = (data) => {
+    dispatch({ type: 'LOGIN', payload: data });
   };
 
   const logout = () => {

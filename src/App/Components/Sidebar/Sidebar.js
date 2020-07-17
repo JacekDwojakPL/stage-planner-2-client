@@ -1,21 +1,36 @@
 import React from 'react';
-import PublicSidebar from './partials/PublicSidebar/PublicSidebar.js';
-import LoggedInSidebar from './partials/LoggedInSidebar/LoggedInSidebar';
+import { Link } from '@reach/router';
+import styles from './Sidebar.scss';
 
-const Sidebar = ({ isAuthenticated, login, logout }) => {
-  if (isAuthenticated) {
-    return (
-      <ul>
-        <LoggedInSidebar logout={logout} />
-      </ul>
-    );
-  } else {
-    return (
-      <ul>
-        <PublicSidebar login={login} />
-      </ul>
-    );
-  }
+const Logout = ({ logout }) => {
+  return (
+    <a
+      onClick={(event) => {
+        event.preventDefault();
+        logout();
+      }}
+    >
+      Logout
+    </a>
+  );
+};
+
+const Sidebar = ({ isAuthenticated, logout }) => {
+  return (
+    <ul className={styles.sidebar}>
+      <li>Home</li>
+      <li>
+        <Link to="stage-plans">My plans</Link>
+      </li>
+      <li>
+        {isAuthenticated ? (
+          <Logout logout={logout} />
+        ) : (
+          <Link to="login">Login</Link>
+        )}
+      </li>
+    </ul>
+  );
 };
 
 export default Sidebar;
