@@ -1,6 +1,6 @@
 .mainScreen {
-  grid-column-start: 2;
-  grid-column-end: 3;
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr;
   background-color: honeydew;
   min-height: 90vh;
 }
