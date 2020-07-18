@@ -1,6 +1,6 @@
 .root {
-  max-width: 1080px;
-  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr;
 }
 
 .mainHeader {
@@ -9,4 +9,5 @@
   font-size: 32px;
   text-align: center;
   background-color: sandybrown;
+  grid-column: span 3;
 }

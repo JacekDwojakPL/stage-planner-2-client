@@ -9,7 +9,6 @@ const App = () => {
   const accessGranted = isAuthenticated();
   return (
     <div className={styles.root}>
-      <header className={styles.mainHeader}>It works!</header>
       <Sidebar isAuthenticated={accessGranted} login={login} logout={logout} />
       <MainScreen
         isAuthenticated={accessGranted}
