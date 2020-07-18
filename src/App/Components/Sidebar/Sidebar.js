@@ -7,8 +7,15 @@ const Logout = ({ logout }) => {
     <a
       onClick={(event) => {
         event.preventDefault();
-        logout();
+        fetch('http://localhost:60703/signout')
+          .then((response) => {
+            if (response.status === 200) {
+              logout();
+            }
+          })
+          .catch(console.error);
       }}
+      href="logout"
     >
       Logout
     </a>
