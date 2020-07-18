@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from '@reach/router';
-import styles from './Sidebar.scss';
+import styles from './Navbar.scss';
 
 const Logout = ({ logout }) => {
   return (
@@ -22,9 +22,9 @@ const Logout = ({ logout }) => {
   );
 };
 
-const Sidebar = ({ isAuthenticated, logout }) => {
+const Navbar = ({ isAuthenticated, logout }) => {
   return (
-    <ul className={styles.sidebar}>
+    <ul className={styles.navbar}>
       <li>Home</li>
       <li>
         <Link to="stage-plans">My plans</Link>
@@ -40,4 +40,4 @@ const Sidebar = ({ isAuthenticated, logout }) => {
   );
 };
 
-export default Sidebar;
+export default Navbar;
