@@ -1,0 +1,5 @@
+.mainEditor {
+  display: grid;
+  grid-template-areas: 'lh ed ed ed ed ed rh';
+  min-height: 90vh;
+}
