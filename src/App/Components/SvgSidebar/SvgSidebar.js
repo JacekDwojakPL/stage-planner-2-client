@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const instruments = [
   'Fl',
@@ -17,8 +17,20 @@ const instruments = [
 ];
 
 const SvgSidebar = () => {
+  const [display, setDisplay] = useState(true);
   return (
-    <div>
+    <div
+      style={{
+        display: display ? 'block' : 'none',
+        gridColumnStart: 1,
+        gridColumnEnd: 2,
+        gridRowStart: 2,
+        gridRowEnd: 3,
+      }}
+    >
+      <button onClick={() => setDisplay(!display)}>
+        {display ? 'Hide' : 'Show'}
+      </button>
       {instruments.map((instrument) => {
         return (
           <div key={Math.random()} style={{ paddingBottom: '.75em' }}>

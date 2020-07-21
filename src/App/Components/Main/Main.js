@@ -2,6 +2,7 @@ import React from 'react';
 import useAuthentication from '../../Authentication/useAuthentication.js';
 import Navbar from '../Navbar/Navbar';
 import MainScreen from '../MainScreen/MainScreen';
+import styles from './Main.scss';
 
 const App = () => {
   const { login, logout, isAuthenticated } = useAuthentication();

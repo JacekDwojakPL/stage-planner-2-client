@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"No tests yet!\" && exit 0",
     "build:dev": "rm -rf ./dist && webpack --env=development",
+    "build:prod": "rm -rf ./dist && webpack --env=production",
     "build:watch": "rm -rf ./dist && webpack --env=development --watch"
   },
   "repository": {
