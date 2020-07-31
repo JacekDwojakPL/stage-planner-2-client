@@ -24,7 +24,6 @@ const SvgCanvas = ({ dimensions: { width, height } }) => {
       viewBox={`0 0 ${width + 1} ${height + 1}`}
     >
       <SvgGrid unit="5" />
-      <Instrument position={{ x: 50, y: 25 }} />
     </svg>
   );
 };

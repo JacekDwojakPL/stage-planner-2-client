@@ -1,6 +1,4 @@
 .mainEditor {
-  display: grid;
-  grid-template-columns: 1fr 5fr 1fr;
-  grid-template-rows: 1fr auto;
-  min-height: 90vh;
+  display: flex;
+  flex-wrap: wrap;
 }

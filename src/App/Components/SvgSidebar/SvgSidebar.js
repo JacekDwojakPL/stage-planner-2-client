@@ -1,47 +1,34 @@
 import React, { useState } from 'react';
+import classnames from 'classnames';
+import styles from './SvgSidebar.scss';
+import InstrumentsList from '../InstrumentsList/InstrumentsList';
+import InstrumentSettings from '../InstrumentSettings/InstrumentSettings';
 
-const instruments = [
-  'Fl',
-  'Cl',
-  'Ob',
-  'Fg',
-  'Cr',
-  'Tr',
-  'Tbn',
-  'Tb',
-  'Vn I',
-  'Vn II',
-  'Vla',
-  'Vc',
-  'Cb',
-];
+const SvgSidebar = ({ addInstrument, instrumentTypes }) => {
+  const [activeTab, setActiveTab] = useState([true, false]);
 
-const SvgSidebar = () => {
-  const [display, setDisplay] = useState(true);
   return (
-    <div
-      style={{
-        display: display ? 'block' : 'none',
-        gridColumnStart: 1,
-        gridColumnEnd: 2,
-        gridRowStart: 2,
-        gridRowEnd: 3,
-      }}
-    >
-      <button onClick={() => setDisplay(!display)}>
-        {display ? 'Hide' : 'Show'}
+    <div className={styles.svgSidebar}>
+      <button
+        onClick={() => setActiveTab([true, false])}
+        className={activeTab[0] ? styles.active : null}
+      >
+        Add
       </button>
-      {instruments.map((instrument) => {
-        return (
-          <div key={Math.random()} style={{ paddingBottom: '.75em' }}>
-            <input
-              type="text"
-              id={`${instrument}-input`}
-              placeholder={instrument}
-            />
-          </div>
-        );
-      })}
+      <button
+        onClick={() => setActiveTab([false, true])}
+        className={activeTab[1] ? styles.active : null}
+      >
+        Edit
+      </button>
+      {activeTab[0] ? (
+        <InstrumentsList
+          addInstrument={addInstrument}
+          instrumentTypes={instrumentTypes}
+        />
+      ) : (
+        <InstrumentSettings />
+      )}
     </div>
   );
 };
