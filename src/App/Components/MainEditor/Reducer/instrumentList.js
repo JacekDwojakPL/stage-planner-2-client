@@ -1,5 +1,10 @@
 export const instrumentList = [
   {
+    name: 'Flute',
+    short_name: 'FL',
+    type: 'wood',
+  },
+  {
     name: 'Violin I',
     short_name: 'VN I',
     type: 'string',
@@ -18,6 +23,11 @@ export const instrumentList = [
     name: 'Violin II',
     short_name: 'VN II',
     type: 'string',
+  },
+  {
+    name: 'Horn',
+    short_name: 'CR',
+    type: 'brass',
   },
   {
     name: 'Trumpet',

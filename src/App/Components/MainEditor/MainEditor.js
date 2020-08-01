@@ -3,18 +3,19 @@ import SvgCanvas from '../SvgCanvas/SvgCanvas';
 import SvgSidebar from '../SvgSidebar/SvgSidebar';
 import { useInstrumentReducer } from './Reducer/reducer';
 import styles from './MainEditor.scss';
+import PrivateRoute from '../PrivateRoute/PrivateRoute';
 
 const MainEditor = () => {
   const [dimensions, setDimenstions] = useState({ width: 1100, height: 600 });
   const [state, dispatch] = useInstrumentReducer();
 
-  const calculateDimensions = (event) => {
-    const newDimensions = { ...dimensions };
-    newDimensions[event.target.name] = (event.target.value / 2) * 100;
-    newDimensions.height = newDimensions.width / 2;
+  // const calculateDimensions = (event) => {
+  //   const newDimensions = { ...dimensions };
+  //   newDimensions[event.target.name] = (event.target.value / 2) * 100;
+  //   newDimensions.height = newDimensions.width / 2;
 
-    setDimenstions(newDimensions);
-  };
+  //   setDimenstions(newDimensions);
+  // };
 
   const addInstrument = (data) => {
     dispatch({
@@ -34,4 +35,6 @@ const MainEditor = () => {
   );
 };
 
-export default MainEditor;
+export default ({ isAuthenticated }) => {
+  return PrivateRoute({ Component: MainEditor, isAuthenticated });
+};

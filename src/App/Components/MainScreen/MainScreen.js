@@ -7,7 +7,7 @@ import { Router } from '@reach/router';
 const MainScreen = ({ isAuthenticated, login }) => {
   return (
     <Router>
-      <MainEditor path="/" />
+      <MainEditor path="/" isAuthenticated={isAuthenticated} />
       <StagePlans path="stage-plans" isAuthenticated={isAuthenticated} />
       <Login path="login" login={login} />
     </Router>
