@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import SvgCanvas from '../SvgCanvas/SvgCanvas';
 import SvgSidebar from '../SvgSidebar/SvgSidebar';
 import { useInstrumentReducer } from './Reducer/reducer';
-import styles from './MainEditor.scss';
+import styles from './Editor.scss';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 
-const MainEditor = () => {
+const Editor = () => {
   const [dimensions, setDimenstions] = useState({ width: 1100, height: 600 });
   const [state, dispatch] = useInstrumentReducer();
 
@@ -25,7 +25,7 @@ const MainEditor = () => {
   };
 
   return (
-    <div className={styles.mainEditor}>
+    <div className={styles.Editor}>
       <SvgSidebar
         addInstrument={addInstrument}
         instrumentTypes={state.instrumentTypes}
@@ -36,5 +36,5 @@ const MainEditor = () => {
 };
 
 export default ({ isAuthenticated }) => {
-  return PrivateRoute({ Component: MainEditor, isAuthenticated });
+  return PrivateRoute({ Component: Editor, isAuthenticated });
 };
