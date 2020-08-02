@@ -1,7 +1,7 @@
-const PositionCalculator = (ref) => {
-  const svgPoint = ref.current.createSVGPoint();
+const PositionCalculator = () => {
   return {
-    getPosition: (event) => {
+    calculatePosition: (event, ref) => {
+      const svgPoint = ref.current.createSVGPoint();
       svgPoint.x = event.clientX;
       svgPoint.y = event.clientY;
       let { x, y } = svgPoint.matrixTransform(
@@ -13,4 +13,4 @@ const PositionCalculator = (ref) => {
   };
 };
 
-export default PositionCalculator;
+export const { calculatePosition } = PositionCalculator();

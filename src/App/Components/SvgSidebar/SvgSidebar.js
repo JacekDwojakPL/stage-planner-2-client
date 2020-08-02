@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import classnames from 'classnames';
 import styles from './SvgSidebar.scss';
 import InstrumentsList from '../InstrumentsList/InstrumentsList';
 import InstrumentSettings from '../InstrumentSettings/InstrumentSettings';
 
-const SvgSidebar = ({ addInstrument, instrumentTypes }) => {
+const SvgSidebar = ({ addInstrumentByInput, instrumentTypes }) => {
   const [activeTab, setActiveTab] = useState([true, false]);
 
   return (
@@ -23,7 +22,7 @@ const SvgSidebar = ({ addInstrument, instrumentTypes }) => {
       </button>
       {activeTab[0] ? (
         <InstrumentsList
-          addInstrument={addInstrument}
+          addInstrumentByInput={addInstrumentByInput}
           instrumentTypes={instrumentTypes}
         />
       ) : (

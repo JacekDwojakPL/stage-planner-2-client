@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './InstrumentsList.scss';
 
-const InstrumentsList = ({ addInstrument, instrumentTypes }) => {
+const InstrumentsList = ({ addInstrumentByInput, instrumentTypes }) => {
   const [active, setInstruments] = useState(Object.keys(instrumentTypes)[0]);
   const changeInstruments = (name) => setInstruments(name);
 
@@ -15,7 +15,7 @@ const InstrumentsList = ({ addInstrument, instrumentTypes }) => {
         return (
           <InstrumentInput
             instrument={instrument}
-            addInstrument={addInstrument}
+            addInstrumentByInput={addInstrumentByInput}
             key={Math.random()}
           />
         );
@@ -24,17 +24,19 @@ const InstrumentsList = ({ addInstrument, instrumentTypes }) => {
   );
 };
 
-const InstrumentInput = ({ instrument, addInstrument }) => {
-  const insertInstrument = (event) => {
-    addInstrument({ ...instrument, count: Number(event.target.value) });
-  };
+const InstrumentInput = ({ instrument, addInstrumentByInput }) => {
   return (
     <input
       type="text"
       id={`${instrument.name}-input`}
       placeholder={instrument.name}
       key={Math.random()}
-      onChange={insertInstrument}
+      onChange={(event) =>
+        addInstrumentByInput({
+          ...instrument,
+          count: Number(event.target.value),
+        })
+      }
       value={instrument.count}
     />
   );

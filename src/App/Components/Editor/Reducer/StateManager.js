@@ -2,13 +2,10 @@ import { instrumentList } from './instrumentList';
 
 function StateManagerFactory() {
   this.init = () => {
-    const initialState = {};
+    const initialState = { instrumentTypes: {}, instruments: [] };
 
     for (let i = 0; i < instrumentList.length; i++) {
       instrumentList[i].count = 0;
-      if (initialState.instrumentTypes === undefined) {
-        initialState.instrumentTypes = {};
-      }
 
       if (initialState.instrumentTypes[instrumentList[i].type] === undefined) {
         initialState.instrumentTypes[instrumentList[i].type] = [];
@@ -61,6 +58,20 @@ function StateManagerFactory() {
 
     return { ...state };
   };
+
+  this.addNewInstrumentByClick = (state, action) => {
+    if (state.instruments === undefined) {
+      state.instruments = [];
+    }
+
+    state.instruments.push(action.payload.instrument);
+
+    return { ...state };
+  };
 }
 
-export const { init, addNewInstrument } = new StateManagerFactory();
+export const {
+  init,
+  addNewInstrument,
+  addNewInstrumentByClick,
+} = new StateManagerFactory();

@@ -4,9 +4,12 @@ import SvgSidebar from '../SvgSidebar/SvgSidebar';
 import { useInstrumentReducer } from './Reducer/reducer';
 import styles from './Editor.scss';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
+import DimensionsCalculator from '../../../lib/DimensionsCalculator';
 
 const Editor = () => {
-  const [dimensions, setDimenstions] = useState({ width: 1100, height: 600 });
+  const [dimensions, setDimenstions] = useState(
+    DimensionsCalculator({ width: 22, height: 15 })
+  );
   const [state, dispatch] = useInstrumentReducer();
 
   // const calculateDimensions = (event) => {
@@ -17,20 +20,28 @@ const Editor = () => {
   //   setDimenstions(newDimensions);
   // };
 
-  const addInstrument = (data) => {
+  const addInstrumentByInput = (data) => {
     dispatch({
-      type: 'ADD',
+      type: 'ADD_BY_INPUT',
       payload: { instrument: data },
     });
+  };
+
+  const addInstrumentByClick = (data) => {
+    dispatch({ type: 'ADD_BY_CLICK', payload: { instrument: data } });
   };
 
   return (
     <div className={styles.Editor}>
       <SvgSidebar
-        addInstrument={addInstrument}
+        addInstrumentByInput={addInstrumentByInput}
         instrumentTypes={state.instrumentTypes}
       />
-      <SvgCanvas dimensions={dimensions} />
+      <SvgCanvas
+        dimensions={dimensions}
+        instruments={state.instruments}
+        addInstrumentByClick={addInstrumentByClick}
+      />
     </div>
   );
 };
