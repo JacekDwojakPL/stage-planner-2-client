@@ -8,7 +8,7 @@ import Instrument from '../Instrument/Instrument';
 const SvgCanvas = ({
   dimensions: { width, height },
   instruments,
-  addInstrumentByClick,
+  actions: { addInstrumentByClick, changeMode },
 }) => {
   const svgRef = useRef(null);
 
@@ -23,7 +23,6 @@ const SvgCanvas = ({
     addInstrumentByClick(newInstrument);
   };
 
-  console.log(instruments);
   return (
     <svg
       width="100%"
@@ -33,8 +32,8 @@ const SvgCanvas = ({
       onClick={clickHandler}
     >
       <SvgGrid unit="5" />
-      {instruments.map(({ x, y }) => (
-        <Instrument position={{ x, y }} />
+      {instruments.map((instrument) => (
+        <Instrument {...{ ...instrument, changeMode }} key={instrument.id} />
       ))}
     </svg>
   );

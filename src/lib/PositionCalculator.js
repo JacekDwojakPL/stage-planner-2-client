@@ -10,7 +10,17 @@ const PositionCalculator = () => {
 
       return { x, y };
     },
+    convertPositionFromSVG: ({ x, y }) => {
+      return { x: (x / 100) * 2, y: (y / 100) * 2 };
+    },
+    convertPositionToSVG: (value) => {
+      return (value / 2) * 100;
+    },
   };
 };
 
-export const { calculatePosition } = PositionCalculator();
+export const {
+  calculatePosition,
+  convertPositionFromSVG,
+  convertPositionToSVG,
+} = PositionCalculator();

@@ -1,8 +1,19 @@
 import React, { useRef } from 'react';
 
-const Instrument = ({ position: { x, y } }) => {
+const Instrument = (data) => {
   return (
-    <circle cx={x} cy={y} r="20" fill="red" stroke="black" strokeWidth="3" />
+    <circle
+      cx={data.x}
+      cy={data.y}
+      r="20"
+      fill="red"
+      stroke="black"
+      strokeWidth="3"
+      onClick={(event) => {
+        event.stopPropagation();
+        data.changeMode({ newMode: 'EDIT', payload: { instrument: data } });
+      }}
+    />
   );
 };
 

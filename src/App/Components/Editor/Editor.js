@@ -8,17 +8,9 @@ import DimensionsCalculator from '../../../lib/DimensionsCalculator';
 
 const Editor = () => {
   const [dimensions, setDimenstions] = useState(
-    DimensionsCalculator({ width: 22, height: 15 })
+    DimensionsCalculator({ width: 22, height: 14 })
   );
   const [state, dispatch] = useInstrumentReducer();
-
-  // const calculateDimensions = (event) => {
-  //   const newDimensions = { ...dimensions };
-  //   newDimensions[event.target.name] = (event.target.value / 2) * 100;
-  //   newDimensions.height = newDimensions.width / 2;
-
-  //   setDimenstions(newDimensions);
-  // };
 
   const addInstrumentByInput = (data) => {
     dispatch({
@@ -31,16 +23,30 @@ const Editor = () => {
     dispatch({ type: 'ADD_BY_CLICK', payload: { instrument: data } });
   };
 
+  const updateInstrument = (data) => {
+    dispatch({ type: 'UPDATE_INSTRUMENT', payload: data.payload });
+  };
+
+  const changeMode = (data) => {
+    if (data.newMode === 'INSERT') {
+      dispatch({ type: 'ENTER_INSERT_MODE', payload: data.payload });
+    }
+
+    if (data.newMode === 'EDIT') {
+      dispatch({ type: 'ENTER_EDIT_MODE', payload: data.payload });
+    }
+  };
+
   return (
     <div className={styles.Editor}>
       <SvgSidebar
-        addInstrumentByInput={addInstrumentByInput}
-        instrumentTypes={state.instrumentTypes}
+        actions={{ addInstrumentByInput, changeMode, updateInstrument }}
+        {...{ ...state }}
       />
       <SvgCanvas
         dimensions={dimensions}
         instruments={state.instruments}
-        addInstrumentByClick={addInstrumentByClick}
+        actions={{ addInstrumentByClick, changeMode }}
       />
     </div>
   );

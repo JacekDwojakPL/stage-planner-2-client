@@ -2,7 +2,12 @@ import { instrumentList } from './instrumentList';
 
 function StateManagerFactory() {
   this.init = () => {
-    const initialState = { instrumentTypes: {}, instruments: [] };
+    const initialState = {
+      instrumentTypes: {},
+      instruments: [],
+      mode: 'INSERT',
+      selected: {},
+    };
 
     for (let i = 0; i < instrumentList.length; i++) {
       instrumentList[i].count = 0;
@@ -25,8 +30,7 @@ function StateManagerFactory() {
         instrument: { name, type },
       },
     } = action;
-    const newState = state;
-    newState.instrumentTypes[type] = state.instrumentTypes[type].map(
+    state.instrumentTypes[type] = state.instrumentTypes[type].map(
       (instrument) => {
         if (instrument.name === name) {
           return action.payload.instrument;
@@ -35,7 +39,7 @@ function StateManagerFactory() {
         }
       }
     );
-    return this._updateInstrumentsList(newState);
+    return this._updateInstrumentsList(state);
   };
 
   this._updateInstrumentsList = (state) => {
@@ -68,10 +72,21 @@ function StateManagerFactory() {
 
     return { ...state };
   };
+
+  this.updateInstrument = (state, action) => {
+    state.instruments.map((instrument) => {
+      if (instrument.id === action.payload.id) {
+        instrument.x = action.payload.x;
+        instrument.y = action.payload.y;
+      }
+    });
+    return { ...state };
+  };
 }
 
 export const {
   init,
   addNewInstrument,
   addNewInstrumentByClick,
+  updateInstrument,
 } = new StateManagerFactory();

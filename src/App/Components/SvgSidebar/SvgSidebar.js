@@ -3,30 +3,33 @@ import styles from './SvgSidebar.scss';
 import InstrumentsList from '../InstrumentsList/InstrumentsList';
 import InstrumentSettings from '../InstrumentSettings/InstrumentSettings';
 
-const SvgSidebar = ({ addInstrumentByInput, instrumentTypes }) => {
-  const [activeTab, setActiveTab] = useState([true, false]);
-
+const SvgSidebar = ({
+  actions: { addInstrumentByInput, changeMode, updateInstrument },
+  instrumentTypes,
+  mode,
+  selected,
+}) => {
   return (
     <div className={styles.svgSidebar}>
       <button
-        onClick={() => setActiveTab([true, false])}
-        className={activeTab[0] ? styles.active : null}
+        onClick={() => changeMode({ newMode: 'INSERT', payload: {} })}
+        className={mode === 'INSERT' ? styles.active : null}
       >
         Add
       </button>
       <button
-        onClick={() => setActiveTab([false, true])}
-        className={activeTab[1] ? styles.active : null}
+        onClick={() => changeMode({ newMode: 'EDIT', payload: {} })}
+        className={mode === 'EDIT' ? styles.active : null}
       >
         Edit
       </button>
-      {activeTab[0] ? (
+      {mode === 'INSERT' ? (
         <InstrumentsList
           addInstrumentByInput={addInstrumentByInput}
           instrumentTypes={instrumentTypes}
         />
       ) : (
-        <InstrumentSettings />
+        <InstrumentSettings {...{ ...selected, updateInstrument }} />
       )}
     </div>
   );
