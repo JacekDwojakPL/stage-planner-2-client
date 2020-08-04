@@ -1,6 +1,8 @@
 .svgSidebar {
   font-size: 12px;
-  flex-basis: 8%;
+  flex-basis: 100%;
+  display: flex;
+  flex-wrap: wrap;
 
   border-left: 1px solid #ededed;
   border-bottom: 1px solid #ededed;
@@ -13,9 +15,18 @@
     display: inline-block;
     background: white;
     padding: 0.7em 1.2em;
+    flex-basis: 50%;
   }
 
   .active {
     background: #ededed;
+  }
+}
+
+@media (min-width: 1281px) {
+  //CSS
+  .svgSidebar {
+    flex-basis: 8%;
+    display: block;
   }
 }
