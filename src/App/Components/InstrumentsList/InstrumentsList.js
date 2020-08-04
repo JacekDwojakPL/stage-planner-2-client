@@ -26,19 +26,25 @@ const InstrumentsList = ({ addInstrumentByInput, instrumentTypes }) => {
 
 const InstrumentInput = ({ instrument, addInstrumentByInput }) => {
   return (
-    <input
-      type="text"
-      id={`${instrument.name}-input`}
-      placeholder={instrument.name}
-      key={Math.random()}
-      onChange={(event) =>
-        addInstrumentByInput({
-          ...instrument,
-          count: Number(event.target.value),
-        })
-      }
-      value={instrument.count}
-    />
+    <label
+      htmlFor={`${instrument.name}-input`}
+      className={styles.instrumentLabel}
+    >
+      {instrument.name}{' '}
+      <input
+        type="text"
+        id={`${instrument.name}-input`}
+        placeholder={instrument.name}
+        key={Math.random()}
+        onChange={(event) =>
+          addInstrumentByInput({
+            ...instrument,
+            count: Number(event.target.value),
+          })
+        }
+        value={instrument.count}
+      />
+    </label>
   );
 };
 export default InstrumentsList;

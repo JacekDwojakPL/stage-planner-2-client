@@ -1,3 +1,10 @@
 .svgCanvas {
-  flex-basis: 90%;
+  flex-basis: 100%;
+}
+
+@media (min-width: 1281px) {
+  //CSS
+  .svgCanvas {
+    flex-basis: 90%;
+  }
 }
