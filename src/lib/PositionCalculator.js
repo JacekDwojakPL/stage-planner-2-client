@@ -10,11 +10,11 @@ const PositionCalculator = () => {
 
       return { x, y };
     },
-    convertPositionFromSVG: ({ x, y }) => {
-      return { x: (x / 100) * 2, y: (y / 100) * 2 };
+    convertPositionFromSVG: ({ x, y, unit }) => {
+      return { x: x / (unit * 10), y: y / (unit * 10) };
     },
-    convertPositionToSVG: (value) => {
-      return (value / 2) * 100;
+    convertPositionToSVG: (value, unit) => {
+      return value * (unit * 10);
     },
   };
 };

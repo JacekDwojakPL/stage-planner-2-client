@@ -4,10 +4,12 @@ import {
   convertPositionToSVG,
 } from '../../../lib/PositionCalculator';
 
-const InstrumentSettings = ({ x, y, name, id, updateInstrument }) => {
-  const [position, setPosition] = useState(convertPositionFromSVG({ x, y }));
+const InstrumentSettings = ({ x, y, name, id, updateInstrument, unit }) => {
+  const [position, setPosition] = useState(
+    convertPositionFromSVG({ x, y, unit })
+  );
   useEffect(() => {
-    setPosition(convertPositionFromSVG({ x, y }));
+    setPosition(convertPositionFromSVG({ x, y, unit }));
   }, [x, y]);
   if (x && y && name) {
     const changeHandler = (event) => {
@@ -45,8 +47,8 @@ const InstrumentSettings = ({ x, y, name, id, updateInstrument }) => {
           onClick={() =>
             updateInstrument({
               payload: {
-                x: convertPositionToSVG(position.x),
-                y: convertPositionToSVG(position.y),
+                x: convertPositionToSVG(position.x, unit),
+                y: convertPositionToSVG(position.y, unit),
                 name,
                 id,
               },

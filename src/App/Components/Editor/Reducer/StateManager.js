@@ -82,6 +82,7 @@ function StateManagerFactory() {
     const { x, y } = convertPositionFromSVG({
       x: dimensions.width,
       y: dimensions.height,
+      unit: dimensions.unit,
     });
 
     const start_x = x / 2 - 0.5;
@@ -93,12 +94,15 @@ function StateManagerFactory() {
       return {
         x:
           instrumentNumber % 2 === 0
-            ? convertPositionToSVG(start_x - (instrumentNumber - 1))
-            : convertPositionToSVG(start_x - instrumentNumber),
+            ? convertPositionToSVG(
+                start_x - (instrumentNumber - 1),
+                dimensions.unit
+              )
+            : convertPositionToSVG(start_x - instrumentNumber, dimensions.unit),
         y:
           instrumentNumber % 2 !== 0
-            ? convertPositionToSVG(start_y)
-            : convertPositionToSVG(end_y),
+            ? convertPositionToSVG(start_y, dimensions.unit)
+            : convertPositionToSVG(end_y, dimensions.unit),
         id: uuidv4(),
         name,
         standNumber: instrumentNumber / 2 + 1,
