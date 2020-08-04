@@ -3,7 +3,7 @@ import {
   init,
   addNewInstrument,
   addNewInstrumentByClick,
-  updateInstrument,
+  updateInstrumentPosition,
 } from './StateManager';
 
 const reducer = (state, action) => {
@@ -28,11 +28,11 @@ const reducer = (state, action) => {
   }
 
   if (action.type === 'UPDATE_INSTRUMENT') {
-    return { ...updateInstrument(state, action) };
+    return { ...updateInstrumentPosition(state, action) };
   }
   return state;
 };
 
-export const useInstrumentReducer = () => {
-  return useReducer(reducer, init());
+export const useInstrumentReducer = (dimensions) => {
+  return useReducer(reducer, init(dimensions));
 };

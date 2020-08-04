@@ -10,7 +10,8 @@ const Editor = () => {
   const [dimensions, setDimenstions] = useState(
     DimensionsCalculator({ width: 22, height: 14 })
   );
-  const [state, dispatch] = useInstrumentReducer();
+  const [state, dispatch] = useInstrumentReducer(dimensions);
+  console.log(state);
 
   const addInstrumentByInput = (data) => {
     dispatch({
