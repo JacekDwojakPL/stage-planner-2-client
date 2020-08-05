@@ -8,6 +8,7 @@ const SvgSidebar = ({
   instrumentTypes,
   mode,
   selected,
+  dimensions: { unit },
 }) => {
   return (
     <div className={styles.svgSidebar}>
@@ -29,7 +30,7 @@ const SvgSidebar = ({
           instrumentTypes={instrumentTypes}
         />
       ) : (
-        <InstrumentSettings {...{ ...selected, updateInstrument }} />
+        <InstrumentSettings {...{ ...selected, updateInstrument, unit }} />
       )}
     </div>
   );

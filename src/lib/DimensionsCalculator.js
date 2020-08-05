@@ -1,5 +1,5 @@
-const DimensionsCalculator = ({ width, height }) => {
-  return { width: (width / 2) * 100, height: (height / 2) * 100 };
+const DimensionsCalculator = ({ width, height, unit }) => {
+  return { width: width * (unit * 10), height: height * (unit * 10), unit };
 };
 
 export default DimensionsCalculator;

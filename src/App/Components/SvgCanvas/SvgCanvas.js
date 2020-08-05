@@ -6,7 +6,7 @@ import SvgGrid from '../SvgGrid/SvgGrid';
 import Instrument from '../Instrument/Instrument';
 
 const SvgCanvas = ({
-  dimensions: { width, height },
+  dimensions: { width, height, unit },
   instruments,
   actions: { addInstrumentByClick, changeMode },
 }) => {
@@ -24,18 +24,20 @@ const SvgCanvas = ({
   };
 
   return (
-    <svg
-      width="100%"
-      ref={svgRef}
-      className={styles.svgCanvas}
-      viewBox={`0 0 ${width + 1} ${height + 1}`}
-      onClick={clickHandler}
-    >
-      <SvgGrid unit="5" />
-      {instruments.map((instrument) => (
-        <Instrument {...{ ...instrument, changeMode }} key={instrument.id} />
-      ))}
-    </svg>
+    <div className={styles.svgCanvas}>
+      <svg
+        ref={svgRef}
+        onClick={clickHandler}
+        width="100%"
+        height="100%"
+        viewBox={`0 0 ${width + 1} ${height + 1}`}
+      >
+        <SvgGrid unit={unit} />
+        {instruments.map((instrument) => (
+          <Instrument {...{ ...instrument, changeMode }} key={instrument.id} />
+        ))}
+      </svg>
+    </div>
   );
 };
 

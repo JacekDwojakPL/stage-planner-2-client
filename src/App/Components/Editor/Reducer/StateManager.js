@@ -1,12 +1,18 @@
 import { instrumentList } from './instrumentList';
+import {
+  convertPositionToSVG,
+  convertPositionFromSVG,
+} from '../../../../lib/PositionCalculator';
+import { v4 as uuidv4 } from 'uuid';
 
 function StateManagerFactory() {
-  this.init = () => {
+  this.init = (dimensions) => {
     const initialState = {
       instrumentTypes: {},
       instruments: [],
       mode: 'INSERT',
       selected: {},
+      dimensions,
     };
 
     for (let i = 0; i < instrumentList.length; i++) {
@@ -43,24 +49,65 @@ function StateManagerFactory() {
   };
 
   this._updateInstrumentsList = (state) => {
+    console.log(state.dimensions);
     state.instruments = [];
     for (const type in state.instrumentTypes) {
       const instrumentList = state.instrumentTypes[type];
       for (const instrument in instrumentList) {
-        const { name, count } = instrumentList[instrument];
+        const { name, count, short_name } = instrumentList[instrument];
         for (let i = 0; i < count; i++) {
-          state.instruments.push({
-            name,
-            id: Math.random(),
-            x: 0,
-            y: 0,
-            standNumber: i + 1,
-          });
+          state.instruments.push(
+            this._calculateInstrumentPosition(
+              state.dimensions,
+              name,
+              i + 1,
+              short_name,
+              count
+            )
+          );
         }
       }
     }
 
     return { ...state };
+  };
+
+  this._calculateInstrumentPosition = (
+    dimensions,
+    name,
+    instrumentNumber,
+    short_name,
+    count
+  ) => {
+    const { x, y } = convertPositionFromSVG({
+      x: dimensions.width,
+      y: dimensions.height,
+      unit: dimensions.unit,
+    });
+
+    const start_x = x / 2 - 0.5;
+    const end_x = 2;
+    const start_y = y - 1.5;
+    const end_y = start_y - 1;
+
+    if (short_name.replace(' ', '').toLowerCase() === 'vni') {
+      return {
+        x:
+          instrumentNumber % 2 === 0
+            ? convertPositionToSVG(
+                start_x - (instrumentNumber - 1),
+                dimensions.unit
+              )
+            : convertPositionToSVG(start_x - instrumentNumber, dimensions.unit),
+        y:
+          instrumentNumber % 2 !== 0
+            ? convertPositionToSVG(start_y, dimensions.unit)
+            : convertPositionToSVG(end_y, dimensions.unit),
+        id: uuidv4(),
+        name,
+        standNumber: instrumentNumber / 2 + 1,
+      };
+    }
   };
 
   this.addNewInstrumentByClick = (state, action) => {
@@ -73,7 +120,7 @@ function StateManagerFactory() {
     return { ...state };
   };
 
-  this.updateInstrument = (state, action) => {
+  this.updateInstrumentPosition = (state, action) => {
     state.instruments.map((instrument) => {
       if (instrument.id === action.payload.id) {
         instrument.x = action.payload.x;
@@ -88,5 +135,5 @@ export const {
   init,
   addNewInstrument,
   addNewInstrumentByClick,
-  updateInstrument,
+  updateInstrumentPosition,
 } = new StateManagerFactory();
