@@ -22,22 +22,22 @@ const SvgCanvas = ({
 
     addInstrumentByClick(newInstrument);
   };
-  const styles = {
-    width: `${width + 1}px`,
-    height: `${height + 1}px`,
-  };
+
   return (
-    <svg
-      ref={svgRef}
-      width={`${width + 1}`}
-      height={`${height + 1}`}
-      onClick={clickHandler}
-    >
-      <SvgGrid unit={unit} />
-      {instruments.map((instrument) => (
-        <Instrument {...{ ...instrument, changeMode }} key={instrument.id} />
-      ))}
-    </svg>
+    <div className={styles.svgCanvas}>
+      <svg
+        ref={svgRef}
+        onClick={clickHandler}
+        width="100%"
+        height="100%"
+        viewBox={`0 0 ${width + 1} ${height + 1}`}
+      >
+        <SvgGrid unit={unit} />
+        {instruments.map((instrument) => (
+          <Instrument {...{ ...instrument, changeMode }} key={instrument.id} />
+        ))}
+      </svg>
+    </div>
   );
 };
 
