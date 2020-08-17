@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useLayoutEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { calculatePosition } from '../../../lib/PositionCalculator';
 import styles from './SvgCanvas.scss';
@@ -28,11 +28,10 @@ const SvgCanvas = ({
       <svg
         ref={svgRef}
         onClick={clickHandler}
-        width="100%"
-        height="100%"
-        viewBox={`0 0 ${width + 1} ${height + 1}`}
+        width={width + 1}
+        height={height + 1}
       >
-        <SvgGrid unit={unit} />
+        <SvgGrid unit={unit} width={width} height={height} />
         {instruments.map((instrument) => (
           <Instrument {...{ ...instrument, changeMode }} key={instrument.id} />
         ))}

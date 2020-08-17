@@ -1,5 +1,7 @@
 .svgCanvas {
   flex-basis: 100%;
+  text-align: center;
+  overflow: auto;
 }
 
 @media (min-width: 1281px) {
