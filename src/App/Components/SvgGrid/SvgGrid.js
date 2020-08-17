@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SvgGrid = ({ unit = 5 }) => {
+const SvgGrid = ({ unit = 5, width, height }) => {
   return (
     <>
       <defs>
@@ -36,7 +36,7 @@ const SvgGrid = ({ unit = 5 }) => {
           />
         </pattern>
       </defs>
-      <rect width="100%" height="100%" fill="url(#grid)" />
+      <rect width={width + 1} height={height + 1} fill="url(#grid)" />
     </>
   );
 };
