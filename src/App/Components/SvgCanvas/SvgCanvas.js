@@ -28,8 +28,8 @@ const SvgCanvas = ({
       <svg
         ref={svgRef}
         onClick={clickHandler}
-        width={width + 1}
-        height={height + 1}
+        width="100%"
+        viewBox={`0 0 ${width + 1} ${height + 1}`}
       >
         <SvgGrid unit={unit} width={width} height={height} />
         {instruments.map((instrument) => (

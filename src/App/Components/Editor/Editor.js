@@ -8,7 +8,7 @@ import DimensionsCalculator from '../../../lib/DimensionsCalculator';
 
 const Editor = () => {
   const [dimensions, setDimenstions] = useState(
-    DimensionsCalculator({ width: 21, height: 15, unit: 5 })
+    DimensionsCalculator({ width: 18, height: 15, unit: 5 })
   );
   const [state, dispatch] = useInstrumentReducer(dimensions);
   console.log(state);
