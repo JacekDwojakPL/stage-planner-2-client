@@ -36,7 +36,7 @@ const SvgGrid = ({ unit = 5, width, height }) => {
           />
         </pattern>
       </defs>
-      <rect width={width + 1} height={height + 1} fill="url(#grid)" />
+      <rect width="100%" height="100%" fill="url(#grid)" />
     </>
   );
 };
