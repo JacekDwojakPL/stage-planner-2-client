@@ -9,10 +9,6 @@ const Instrument = (data) => {
       fill="red"
       stroke="black"
       strokeWidth="3"
-      onClick={(event) => {
-        event.stopPropagation();
-        data.changeMode({ newMode: 'EDIT', payload: { instrument: data } });
-      }}
     />
   );
 };

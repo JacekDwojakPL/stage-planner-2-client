@@ -1,18 +1,13 @@
 import { useReducer } from 'react';
-import {
-  init,
-  addNewInstrument,
-  addNewInstrumentByClick,
-  updateInstrumentPosition,
-} from './StateManager';
+import { init, addNewInstrumentByClick, addInstrument } from './StateManager';
 
 const reducer = (state, action) => {
-  if (action.type === 'ADD_BY_INPUT') {
-    return { ...addNewInstrument(state, action) };
-  }
-
   if (action.type === 'ADD_BY_CLICK') {
     return { ...addNewInstrumentByClick(state, action) };
+  }
+
+  if (action.type === 'ADD_BY_INPUT') {
+    return { ...addInstrument(state, action) };
   }
 
   if (action.type === 'ENTER_INSERT_MODE') {
@@ -27,9 +22,6 @@ const reducer = (state, action) => {
     };
   }
 
-  if (action.type === 'UPDATE_INSTRUMENT') {
-    return { ...updateInstrumentPosition(state, action) };
-  }
   return state;
 };
 
