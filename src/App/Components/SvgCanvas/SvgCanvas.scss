@@ -2,11 +2,12 @@
   flex-basis: 100%;
   text-align: center;
   overflow: auto;
+  max-height: 85vh;
 }
 
 @media (min-width: 1281px) {
   //CSS
   .svgCanvas {
-    flex-basis: 90%;
+    flex-basis: 85%;
   }
 }
