@@ -13,7 +13,7 @@ script:
   - npm test
 before_deploy:
   - npm install -g travis-ci-cloudfront-invalidation
-  - npm run build:dev
+  - npm run build:prod
 deploy:
   provider: s3
   access_key_id: $AWS_ACCESS_KEY_ID
