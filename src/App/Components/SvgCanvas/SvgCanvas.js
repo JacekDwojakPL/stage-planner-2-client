@@ -1,6 +1,10 @@
 import React, { useRef, useLayoutEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { calculatePosition } from '../../../lib/PositionCalculator';
+import {
+  calculatePosition,
+  convertPositionToSVG,
+  convertPositionFromSVG,
+} from '../../../lib/PositionCalculator';
 import styles from './SvgCanvas.scss';
 import SvgGrid from '../SvgGrid/SvgGrid';
 import Instrument from '../Instrument/Instrument';
@@ -13,10 +17,15 @@ const SvgCanvas = ({
   const svgRef = useRef(null);
 
   const clickHandler = (event) => {
+    let newPosition = convertPositionFromSVG({
+      ...calculatePosition(event, svgRef),
+      unit: 5,
+    });
+
     const newInstrument = {
       name: 'instrument',
       id: uuidv4(),
-      ...calculatePosition(event, svgRef),
+      ...newPosition,
       standNumber: 1,
     };
 
@@ -32,9 +41,23 @@ const SvgCanvas = ({
         viewBox={`0 0 ${width + 1} ${height + 1}`}
       >
         <SvgGrid unit={unit} width={width} height={height} />
-        {instruments.map((instrument) => (
-          <Instrument {...{ ...instrument }} key={instrument.id} />
-        ))}
+        {instruments.map((instrument) => {
+          console.log({
+            ...instrument,
+            x: convertPositionToSVG(instrument.x),
+            y: convertPositionToSVG(instrument.y),
+          });
+          return (
+            <Instrument
+              {...{
+                ...instrument,
+                x: convertPositionToSVG(instrument.x),
+                y: convertPositionToSVG(instrument.y),
+              }}
+              key={instrument.id}
+            />
+          );
+        })}
       </svg>
     </div>
   );
