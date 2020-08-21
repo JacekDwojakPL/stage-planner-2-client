@@ -22,9 +22,41 @@ const reducer = (state, action) => {
     };
   }
 
+  if (action.type === 'CHANGE_WIDTH') {
+    return {
+      ...state,
+      dimensions: { ...state.dimensions, width: action.payload.width },
+    };
+  }
+
+  if (action.type === 'CHANGE_HEIGHT') {
+    return {
+      ...state,
+      dimensions: { ...state.dimensions, height: action.payload.height },
+    };
+  }
+
+  if (action.type === 'CHANGE_ZOOM') {
+    console.log('CHANGE ZOOM', action, {
+      ...state,
+      dimensions: { ...state.dimensions, zoom: action.payload.zoom },
+    });
+
+    return {
+      ...state,
+      dimensions: { ...state.dimensions, zoom: action.payload.zoom },
+    };
+  }
+
   return state;
 };
 
-export const useInstrumentReducer = (dimensions) => {
+export const useInstrumentReducer = () => {
+  const dimensions = {
+    width: 18,
+    height: 15,
+    unit: 5,
+    zoom: 100,
+  };
   return useReducer(reducer, init(dimensions));
 };

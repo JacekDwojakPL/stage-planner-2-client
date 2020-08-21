@@ -11,14 +11,9 @@ const [...instrumentTypes] = new Set(
 );
 
 const Editor = () => {
-  const [dimensions, setDimenstions] = useState({
-    width: 18,
-    height: 15,
-    unit: 5,
-    zoom: 100,
-  });
-  const [state, dispatch] = useInstrumentReducer(dimensions);
+  const [state, dispatch] = useInstrumentReducer();
   const [activeType, setActiveType] = useState(instrumentTypes[0]);
+  console.log(state);
 
   const addInstrumentByInput = (data) => {
     dispatch({
@@ -39,9 +34,12 @@ const Editor = () => {
           max="200"
           min="10"
           step="1"
-          value={dimensions.zoom}
+          value={state.dimensions.zoom}
           onChange={() => {
-            setDimenstions({ ...dimensions, zoom: event.target.value });
+            dispatch({
+              type: 'CHANGE_ZOOM',
+              payload: { zoom: event.target.value },
+            });
           }}
         />
         <input
@@ -49,9 +47,12 @@ const Editor = () => {
           max="50"
           min="5"
           step="1"
-          value={dimensions.width}
+          value={state.dimensions.width}
           onChange={() => {
-            setDimenstions({ ...dimensions, width: event.target.value });
+            dispatch({
+              type: 'CHANGE_WIDTH',
+              payload: { width: event.target.value },
+            });
           }}
         />
         <input
@@ -59,9 +60,12 @@ const Editor = () => {
           max="50"
           min="5"
           step="1"
-          value={dimensions.height}
+          value={state.dimensions.height}
           onChange={() => {
-            setDimenstions({ ...dimensions, height: event.target.value });
+            dispatch({
+              type: 'CHANGE_HEIGHT',
+              payload: { height: event.target.value },
+            });
           }}
         />
         {instrumentTypes.map((type) => {
@@ -95,7 +99,7 @@ const Editor = () => {
           })}
       </div>
       <SvgCanvas
-        dimensions={DimensionsCalculator({ ...dimensions })}
+        dimensions={DimensionsCalculator({ ...state.dimensions })}
         instruments={state.instruments}
         actions={{ addInstrumentByClick }}
       />
