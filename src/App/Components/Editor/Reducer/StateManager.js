@@ -10,8 +10,8 @@ function StateManagerFactory() {
   this.init = (dimensions) => {
     const initialState = {
       instruments: [],
-      mode: 'INSERT',
       dimensions,
+      selected: null,
     };
 
     return initialState;
@@ -29,10 +29,12 @@ function StateManagerFactory() {
       filteredInstruments.push({
         ...newInstrument,
         ...calculateViolinPosition(i, state.dimensions),
+        instrument_number: i + 1,
+        id: uuidv4(),
       });
     }
 
-    return { ...state, instruments: filteredInstruments };
+    return { ...state, instruments: filteredInstruments, selected: null };
   };
 
   this.addNewInstrumentByClick = (state, action) => {
@@ -42,7 +44,24 @@ function StateManagerFactory() {
 
     state.instruments.push(action.payload);
 
-    return { ...state };
+    return { ...state, selected: null };
+  };
+
+  this.selectInstrument = (state, action) => {
+    return { ...state, selected: action.payload.instrument };
+  };
+
+  this.updateInstrument = (state, action) => {
+    const filteredInstruments = state.instruments.filter(
+      ({ id }) => id !== action.payload.id
+    );
+    filteredInstruments.push(action.payload);
+
+    return {
+      ...state,
+      instruments: filteredInstruments,
+      selected: action.payload,
+    };
   };
 }
 
@@ -50,4 +69,6 @@ export const {
   init,
   addNewInstrumentByClick,
   addInstrument,
+  selectInstrument,
+  updateInstrument,
 } = new StateManagerFactory();

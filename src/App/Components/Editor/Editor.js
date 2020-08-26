@@ -6,13 +6,23 @@ import styles from './Editor.scss';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import DimensionsCalculator from '../../../lib/DimensionsCalculator';
 
-const [...instrumentTypes] = new Set(
-  instrumentList.map((instrument) => instrument.type)
-);
+const TypesButtons = (clickHandler) => {
+  const [...instrumentTypes] = new Set(
+    instrumentList.map((instrument) => instrument.type)
+  );
+
+  return instrumentTypes.map((type) => {
+    return (
+      <button onClick={() => clickHandler(type)} key={type}>
+        {type}
+      </button>
+    );
+  });
+};
 
 const Editor = () => {
   const [state, dispatch] = useInstrumentReducer();
-  const [activeType, setActiveType] = useState(instrumentTypes[0]);
+  const [activeType, setActiveType] = useState('string');
   console.log(state);
 
   const addInstrumentByInput = (data) => {
@@ -24,6 +34,14 @@ const Editor = () => {
 
   const addInstrumentByClick = (data) => {
     dispatch({ type: 'ADD_BY_CLICK', payload: data });
+  };
+
+  const selectInstrument = (data) => {
+    dispatch({ type: 'SELECT_INSTRUMENT', payload: data });
+  };
+
+  const updateInstrument = (data) => {
+    dispatch({ type: 'UPDATE_INSTRUMENT', payload: data });
   };
 
   return (
@@ -68,13 +86,32 @@ const Editor = () => {
             });
           }}
         />
-        {instrumentTypes.map((type) => {
-          return (
-            <button key={type} onClick={() => setActiveType(type)}>
-              {type}
-            </button>
-          );
-        })}
+        {state.selected ? (
+          <input
+            type="number"
+            value={state.selected.x}
+            step="0.1"
+            onChange={(event) =>
+              updateInstrument({
+                ...state.selected,
+                x: Number(event.target.value),
+              })
+            }
+          />
+        ) : null}
+        {state.selected ? (
+          <input
+            type="number"
+            value={state.selected.y}
+            step="0.1"
+            onChange={(event) =>
+              updateInstrument({
+                ...state.selected,
+                y: Number(event.target.value),
+              })
+            }
+          />
+        ) : null}
         {instrumentList
           .filter(({ type }) => type === activeType)
           .map((instrument) => {
@@ -101,7 +138,7 @@ const Editor = () => {
       <SvgCanvas
         dimensions={DimensionsCalculator({ ...state.dimensions })}
         instruments={state.instruments}
-        actions={{ addInstrumentByClick }}
+        actions={{ addInstrumentByClick, selectInstrument }}
       />
     </div>
   );

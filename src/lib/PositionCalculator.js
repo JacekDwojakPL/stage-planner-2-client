@@ -1,3 +1,5 @@
+import offsetMap from './OffsetMapper';
+
 const PositionCalculator = () => {
   return {
     calculatePosition: (event, ref) => {
@@ -17,18 +19,29 @@ const PositionCalculator = () => {
       return value * (unit * 10);
     },
     calculateViolinPosition: (instrumentNumber, dimensions) => {
-      let startX = dimensions.width / 2 - 1;
+      let startX = dimensions.width / 2;
       let possiblePositions = [];
-      for (startX; startX > 0; startX--) {
-        possiblePositions.push(...[{ x: startX - 0.5 }, { x: startX - 0.5 }]);
+      for (let i = startX; i > 0; i--) {
+        possiblePositions.push(...[{ x: i - 1 }, { x: i - 1 }]);
       }
-      possiblePositions = possiblePositions.map((element, index) => {
-        if (index % 2 === 0) {
-          return { y: dimensions.height - 1.5, ...element };
-        } else {
-          return { y: dimensions.height - 2.5, ...element };
-        }
-      });
+      possiblePositions = possiblePositions
+        .map((element, index) => {
+          if (index % 2 === 0) {
+            return { y: dimensions.height - 1, ...element };
+          } else {
+            return { y: dimensions.height - 2, ...element };
+          }
+        })
+        .map((element, index) => {
+          if (index >= 10 && offsetMap[index] !== undefined) {
+            return {
+              x: startX - 1 - offsetMap[index].offset_x,
+              y: dimensions.height - 1 - offsetMap[index].offset_y,
+            };
+          } else {
+            return element;
+          }
+        });
 
       return possiblePositions[instrumentNumber];
     },

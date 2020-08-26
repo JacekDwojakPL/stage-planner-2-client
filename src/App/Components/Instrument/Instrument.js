@@ -1,14 +1,16 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
 const Instrument = (data) => {
   return (
     <circle
-      cx={data.x}
-      cy={data.y}
-      r="20"
+      cx={data.converted_x}
+      cy={data.converted_y}
+      r="15"
       fill="red"
-      stroke="black"
-      strokeWidth="3"
+      onClick={(event) => {
+        event.stopPropagation();
+        data.selectInstrument({ instrument: data });
+      }}
     />
   );
 };

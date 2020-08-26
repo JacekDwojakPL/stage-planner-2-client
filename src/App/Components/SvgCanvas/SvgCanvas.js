@@ -12,7 +12,7 @@ import Instrument from '../Instrument/Instrument';
 const SvgCanvas = ({
   dimensions: { width, height, unit, zoom },
   instruments,
-  actions: { addInstrumentByClick },
+  actions: { addInstrumentByClick, selectInstrument },
 }) => {
   const svgRef = useRef(null);
 
@@ -33,7 +33,7 @@ const SvgCanvas = ({
   };
 
   return (
-    <div className={styles.svgCanvas}>
+    <div className={styles.svgCanvas} tabIndex={0}>
       <svg
         ref={svgRef}
         onClick={clickHandler}
@@ -42,17 +42,13 @@ const SvgCanvas = ({
       >
         <SvgGrid unit={unit} width={width} height={height} />
         {instruments.map((instrument) => {
-          console.log({
-            ...instrument,
-            x: convertPositionToSVG(instrument.x),
-            y: convertPositionToSVG(instrument.y),
-          });
           return (
             <Instrument
               {...{
                 ...instrument,
-                x: convertPositionToSVG(instrument.x),
-                y: convertPositionToSVG(instrument.y),
+                converted_x: convertPositionToSVG(instrument.x),
+                converted_y: convertPositionToSVG(instrument.y),
+                selectInstrument,
               }}
               key={instrument.id}
             />
