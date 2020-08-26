@@ -2,6 +2,11 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+
+  input[type='number'] {
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+  }
 }
 
 .Sidebar {

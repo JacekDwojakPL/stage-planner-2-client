@@ -1,5 +1,11 @@
 import { useReducer } from 'react';
-import { init, addNewInstrumentByClick, addInstrument } from './StateManager';
+import {
+  init,
+  addNewInstrumentByClick,
+  addInstrument,
+  selectInstrument,
+  updateInstrument,
+} from './StateManager';
 
 const reducer = (state, action) => {
   if (action.type === 'ADD_BY_CLICK') {
@@ -10,16 +16,12 @@ const reducer = (state, action) => {
     return { ...addInstrument(state, action) };
   }
 
-  if (action.type === 'ENTER_INSERT_MODE') {
-    return { ...state, mode: 'INSERT' };
+  if (action.type === 'SELECT_INSTRUMENT') {
+    return { ...selectInstrument(state, action) };
   }
 
-  if (action.type === 'ENTER_EDIT_MODE') {
-    return {
-      ...state,
-      mode: 'EDIT',
-      selected: action.payload.instrument ? action.payload.instrument : {},
-    };
+  if (action.type === 'UPDATE_INSTRUMENT') {
+    return { ...updateInstrument(state, action) };
   }
 
   if (action.type === 'CHANGE_WIDTH') {
@@ -37,11 +39,6 @@ const reducer = (state, action) => {
   }
 
   if (action.type === 'CHANGE_ZOOM') {
-    console.log('CHANGE ZOOM', action, {
-      ...state,
-      dimensions: { ...state.dimensions, zoom: action.payload.zoom },
-    });
-
     return {
       ...state,
       dimensions: { ...state.dimensions, zoom: action.payload.zoom },
