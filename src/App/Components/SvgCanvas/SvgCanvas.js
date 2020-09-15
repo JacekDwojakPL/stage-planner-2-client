@@ -1,10 +1,5 @@
-import React, { useRef, useLayoutEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import {
-  calculatePosition,
-  convertPositionToSVG,
-  convertPositionFromSVG,
-} from '../../../lib/PositionCalculator';
+import React, { useRef } from 'react';
+import { convertPositionToSVG } from '../../../lib/PositionCalculator';
 import styles from './SvgCanvas.scss';
 import SvgGrid from '../SvgGrid/SvgGrid';
 import Instrument from '../Instrument/Instrument';
@@ -17,19 +12,7 @@ const SvgCanvas = ({
   const svgRef = useRef(null);
 
   const clickHandler = (event) => {
-    let newPosition = convertPositionFromSVG({
-      ...calculatePosition(event, svgRef),
-      unit: 5,
-    });
-
-    const newInstrument = {
-      name: 'instrument',
-      id: uuidv4(),
-      ...newPosition,
-      standNumber: 1,
-    };
-
-    addInstrumentByClick(newInstrument);
+    addInstrumentByClick({ x: event.clientX, y: event.clientY, svgRef });
   };
 
   return (
