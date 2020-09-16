@@ -29,7 +29,7 @@ function StateManagerFactory() {
     for (let i = 0; i < action.payload.count; i++) {
       filteredInstruments.push({
         ...newInstrument,
-        ...calculateViolinPosition(i, state.dimensions),
+        ...calculateViolinPosition(i, state.dimensions, newInstrument.name),
         instrument_number: i + 1,
         id: uuidv4(),
       });

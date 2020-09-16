@@ -19,24 +19,28 @@ const PositionCalculator = () => {
     convertPositionToSVG: (value, unit = 5) => {
       return value * (unit * 10);
     },
-    calculateViolinPosition: (instrumentNumber, dimensions) => {
-      let startX = dimensions.width / 2;
-      let possiblePositions = [];
-      for (let i = startX; i > 0; i--) {
-        possiblePositions.push(...[{ x: i - 1 }, { x: i - 1 }]);
-      }
-      possiblePositions = possiblePositions.map((element, index) => {
-        if (offsetMap[index] !== undefined) {
-          return {
-            x: startX - 1 - offsetMap[index].offset_x,
-            y: dimensions.height - 1 - offsetMap[index].offset_y,
-          };
-        } else {
-          return element;
-        }
-      });
-
-      return possiblePositions[instrumentNumber];
+    calculateViolinPosition: (instrumentNumber, dimensions, instrumentName) => {
+      let startX = dimensions.width / 2 - 1;
+      let startY = 14;
+      let filtered = offsetMap
+        .filter((instrument) => instrument.name === instrumentName)
+        .sort((a, b) => (a.instrument_number > b.instrument_number ? 1 : -1));
+      // let possiblePositions = [];
+      // for (let i = startX; i > 0; i--) {
+      //   possiblePositions.push(...[{ x: i - 1 }, { x: i - 1 }]);
+      // }
+      // possiblePositions = possiblePositions.map((element, index) => {
+      //   if (offsetMap[index] !== undefined) {
+      //     return {
+      //       x: startX - 1 - offsetMap[index].offset_x,
+      //       y: dimensions.height - 1 - offsetMap[index].offset_y,
+      //     };
+      //   } else {
+      //     return element;
+      //   }
+      // });
+      const { offsetX, offsetY } = filtered[instrumentNumber];
+      return { x: startX - offsetX, y: startY - offsetY };
     },
   };
 };
