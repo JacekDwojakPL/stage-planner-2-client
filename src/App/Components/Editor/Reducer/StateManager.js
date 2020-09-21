@@ -3,6 +3,7 @@ import {
   convertPositionToSVG,
   convertPositionFromSVG,
   calculateViolinPosition,
+  calculatePosition,
 } from '../../../../lib/PositionCalculator';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -28,7 +29,7 @@ function StateManagerFactory() {
     for (let i = 0; i < action.payload.count; i++) {
       filteredInstruments.push({
         ...newInstrument,
-        ...calculateViolinPosition(i, state.dimensions),
+        ...calculateViolinPosition(i, state.dimensions, newInstrument.name),
         instrument_number: i + 1,
         id: uuidv4(),
       });
@@ -41,8 +42,17 @@ function StateManagerFactory() {
     if (state.instruments === undefined) {
       state.instruments = [];
     }
+    let { x: svgX, y: svgY, svgRef } = action.payload;
+    let { x, y } = calculatePosition({ x: svgX, y: svgY }, svgRef);
 
-    state.instruments.push(action.payload);
+    const newInstrument = {
+      name: 'instrument',
+      id: uuidv4(),
+      x: convertPositionFromSVG(x),
+      y: convertPositionFromSVG(y),
+      standNumber: 1,
+    };
+    state.instruments.push(newInstrument);
 
     return { ...state, selected: null };
   };
