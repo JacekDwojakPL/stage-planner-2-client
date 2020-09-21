@@ -52,7 +52,6 @@ export const useInstrumentReducer = () => {
   const dimensions = {
     width: 18,
     height: 15,
-    unit: 5,
     zoom: 100,
   };
   return useReducer(reducer, init(dimensions));

@@ -1,5 +1,26 @@
 import offsetMap from './OffsetMapper';
 
+const getStartPositions = (dimensions, instrumentName) => {
+  let startX = 0;
+  let startY = 0;
+
+  switch (instrumentName) {
+    case 'Violin I':
+      startX = dimensions.width / 2 - 1;
+      startY = dimensions.height - 1;
+      break;
+    case 'Violin II':
+      startX = dimensions.width / 2;
+      startY = dimensions.height - 3;
+      break;
+    default:
+      startX = dimensions.width / 2 - 1;
+      startY = dimensions.height - 2;
+      break;
+  }
+  return { startX, startY };
+};
+
 const PositionCalculator = () => {
   console.log(offsetMap);
   return {
@@ -20,25 +41,11 @@ const PositionCalculator = () => {
       return value * (unit * 10);
     },
     calculateViolinPosition: (instrumentNumber, dimensions, instrumentName) => {
-      let startX = dimensions.width / 2 - 1;
-      let startY = 14;
+      let { startX, startY } = getStartPositions(dimensions, instrumentName);
       let filtered = offsetMap
         .filter((instrument) => instrument.name === instrumentName)
         .sort((a, b) => (a.instrument_number > b.instrument_number ? 1 : -1));
-      // let possiblePositions = [];
-      // for (let i = startX; i > 0; i--) {
-      //   possiblePositions.push(...[{ x: i - 1 }, { x: i - 1 }]);
-      // }
-      // possiblePositions = possiblePositions.map((element, index) => {
-      //   if (offsetMap[index] !== undefined) {
-      //     return {
-      //       x: startX - 1 - offsetMap[index].offset_x,
-      //       y: dimensions.height - 1 - offsetMap[index].offset_y,
-      //     };
-      //   } else {
-      //     return element;
-      //   }
-      // });
+
       const { offsetX, offsetY } = filtered[instrumentNumber];
       return { x: startX - offsetX, y: startY - offsetY };
     },

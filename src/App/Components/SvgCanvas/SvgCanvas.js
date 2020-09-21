@@ -5,7 +5,7 @@ import SvgGrid from '../SvgGrid/SvgGrid';
 import Instrument from '../Instrument/Instrument';
 
 const SvgCanvas = ({
-  dimensions: { width, height, unit, zoom },
+  dimensions: { width, height, zoom },
   instruments,
   actions: { addInstrumentByClick, selectInstrument },
 }) => {
@@ -16,28 +16,34 @@ const SvgCanvas = ({
   };
 
   return (
-    <div className={styles.svgCanvas} tabIndex={0}>
-      <svg
-        ref={svgRef}
-        onClick={clickHandler}
-        width={`${zoom}%`}
-        viewBox={`0 0 ${width + 1} ${height + 1}`}
-      >
-        <SvgGrid unit={unit} width={width} height={height} />
-        {instruments.map((instrument) => {
-          return (
-            <Instrument
-              {...{
-                ...instrument,
-                converted_x: convertPositionToSVG(instrument.x),
-                converted_y: convertPositionToSVG(instrument.y),
-                selectInstrument,
-              }}
-              key={instrument.id}
-            />
-          );
-        })}
-      </svg>
+    <div className={styles.editorContainer}>
+      <div className={styles.editorCanvas}>
+        <svg
+          ref={svgRef}
+          onClick={clickHandler}
+          width={width + 1}
+          height={height + 1}
+          style={{
+            transform: `scale(${zoom / 100})`,
+            transformOrigin: '0% 0%',
+          }}
+        >
+          <SvgGrid />
+          {instruments.map((instrument) => {
+            return (
+              <Instrument
+                {...{
+                  ...instrument,
+                  converted_x: convertPositionToSVG(instrument.x),
+                  converted_y: convertPositionToSVG(instrument.y),
+                  selectInstrument,
+                }}
+                key={instrument.id}
+              />
+            );
+          })}
+        </svg>
+      </div>
     </div>
   );
 };
