@@ -1,15 +1,14 @@
 .editorContainer {
-  grid-row-start: 2;
+  grid-row-start: 1;
   grid-column: span 3;
   overflow: auto;
   position: relative;
-  min-height: 50vh;
+  min-height: 80vh;
 
   @media (min-width: 1024px) {
     grid-row-start: 1;
     grid-column-start: 2;
     grid-column-end: 3;
-    min-height: 80vh;
   }
 }
 

@@ -169,20 +169,4 @@ const instruments = [
   },
 ];
 
-const output = instruments
-  .filter((instrument) => instrument.name === 'Violin II')
-  .sort((a, b) => (a.instrument_number > b.instrument_number ? 1 : -1));
-
-const { x, y } = output[0];
-
-// for (let i = 0; i < map.instruments.length; i++) {
-//   const offsetX = x - map.instruments[i].x;
-//   const offsetY = y - map.instruments[i].y;
-//   output.push({
-//     offsetX,
-//     offsetY,
-//     instrument_number: map.instruments[i].instrument_number,
-//   });
-// }
-console.log(output);
 export default instruments;

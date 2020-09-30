@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SvgCanvas from '../SvgCanvas/SvgCanvas';
+import Workbar from '../Workbar/Workbar';
 import { useInstrumentReducer } from './Reducer/reducer';
 import { instrumentList } from './Reducer/instrumentList';
 import styles from './Editor.scss';
@@ -22,8 +23,6 @@ const TypesButtons = (clickHandler) => {
 
 const Editor = () => {
   const [state, dispatch] = useInstrumentReducer();
-  const [activeType, setActiveType] = useState('string');
-  console.log(state);
 
   const addInstrumentByInput = (data) => {
     dispatch({
@@ -46,7 +45,8 @@ const Editor = () => {
 
   return (
     <div className={styles.Editor}>
-      <div className={styles.Sidebar}>
+      <Workbar instrumentList={instrumentList} instruments={state.instruments} addInstrumentByInput={addInstrumentByInput}/>
+      {/* <div className={styles.Sidebar}>
         <input
           type="range"
           max="200"
@@ -112,29 +112,7 @@ const Editor = () => {
             }
           />
         ) : null}
-        {instrumentList
-          .filter(({ type }) => type === activeType)
-          .map((instrument) => {
-            return (
-              <input
-                key={instrument.name}
-                placeholder={instrument.name}
-                type="text"
-                onChange={(event) =>
-                  addInstrumentByInput({
-                    ...instrument,
-                    count: event.target.value,
-                  })
-                }
-                value={
-                  state.instruments.filter(
-                    ({ name }) => name === instrument.name
-                  ).length
-                }
-              />
-            );
-          })}
-      </div>
+      </div> */}
       <SvgCanvas
         dimensions={DimensionsCalculator({ ...state.dimensions })}
         instruments={state.instruments}
