@@ -43,80 +43,26 @@ const Editor = () => {
     dispatch({ type: 'UPDATE_INSTRUMENT', payload: data });
   };
 
+  const changeDimensions = (data) => {
+    dispatch({
+      type: data.type,
+      payload: { [data.dimension]: data.value },
+    });
+  };
+  console.log(state);
   return (
     <div className={styles.Editor}>
-      <Workbar instrumentList={instrumentList} instruments={state.instruments} addInstrumentByInput={addInstrumentByInput}/>
-      {/* <div className={styles.Sidebar}>
-        <input
-          type="range"
-          max="200"
-          min="10"
-          step="1"
-          value={state.dimensions.zoom}
-          onChange={() => {
-            dispatch({
-              type: 'CHANGE_ZOOM',
-              payload: { zoom: event.target.value },
-            });
-          }}
-        />
-        <input
-          type="range"
-          max="50"
-          min="5"
-          step="1"
-          value={state.dimensions.width}
-          onChange={() => {
-            dispatch({
-              type: 'CHANGE_WIDTH',
-              payload: { width: event.target.value },
-            });
-          }}
-        />
-        <input
-          type="range"
-          max="50"
-          min="5"
-          step="1"
-          value={state.dimensions.height}
-          onChange={() => {
-            dispatch({
-              type: 'CHANGE_HEIGHT',
-              payload: { height: event.target.value },
-            });
-          }}
-        />
-        {state.selected ? (
-          <input
-            type="number"
-            value={state.selected.x}
-            step="0.1"
-            onChange={(event) =>
-              updateInstrument({
-                ...state.selected,
-                x: Number(event.target.value),
-              })
-            }
-          />
-        ) : null}
-        {state.selected ? (
-          <input
-            type="number"
-            value={state.selected.y}
-            step="0.1"
-            onChange={(event) =>
-              updateInstrument({
-                ...state.selected,
-                y: Number(event.target.value),
-              })
-            }
-          />
-        ) : null}
-      </div> */}
+      <Workbar
+        instrumentList={instrumentList}
+        addInstrumentByInput={addInstrumentByInput}
+        updateInstrument={updateInstrument}
+        changeDimensions={changeDimensions}
+        {...state}
+      />
       <SvgCanvas
         dimensions={DimensionsCalculator({ ...state.dimensions })}
         instruments={state.instruments}
-        actions={{ addInstrumentByClick, selectInstrument }}
+        actions={{ addInstrumentByClick, selectInstrument, updateInstrument }}
       />
     </div>
   );

@@ -7,7 +7,7 @@ import Instrument from '../Instrument/Instrument';
 const SvgCanvas = ({
   dimensions: { width, height, zoom },
   instruments,
-  actions: { addInstrumentByClick, selectInstrument },
+  actions: { addInstrumentByClick, selectInstrument, updateInstrument },
 }) => {
   const svgRef = useRef(null);
 
@@ -37,6 +37,8 @@ const SvgCanvas = ({
                   converted_x: convertPositionToSVG(instrument.x),
                   converted_y: convertPositionToSVG(instrument.y),
                   selectInstrument,
+                  updateInstrument,
+                  svgRef,
                 }}
                 key={instrument.id}
               />
