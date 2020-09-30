@@ -22,7 +22,6 @@ const getStartPositions = (dimensions, instrumentName) => {
 };
 
 const PositionCalculator = () => {
-  console.log(offsetMap);
   return {
     calculatePosition: ({ x, y }, ref) => {
       const svgPoint = ref.current.createSVGPoint();
