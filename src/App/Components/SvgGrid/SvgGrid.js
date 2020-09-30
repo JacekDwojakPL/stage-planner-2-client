@@ -1,6 +1,7 @@
 import React from 'react';
 
-const SvgGrid = ({ unit = 5, width, height }) => {
+const SvgGrid = () => {
+  const unit = 5;
   return (
     <>
       <defs>

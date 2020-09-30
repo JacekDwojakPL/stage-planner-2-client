@@ -1,20 +1,52 @@
+import offsetMap from './OffsetMapper';
+
+const getStartPositions = (dimensions, instrumentName) => {
+  let startX = 0;
+  let startY = 0;
+
+  switch (instrumentName) {
+    case 'Violin I':
+      startX = dimensions.width / 2 - 1;
+      startY = dimensions.height - 1;
+      break;
+    case 'Violin II':
+      startX = dimensions.width / 2;
+      startY = dimensions.height - 3;
+      break;
+    default:
+      startX = dimensions.width / 2 - 1;
+      startY = dimensions.height - 2;
+      break;
+  }
+  return { startX, startY };
+};
+
 const PositionCalculator = () => {
   return {
-    calculatePosition: (event, ref) => {
+    calculatePosition: ({ x, y }, ref) => {
       const svgPoint = ref.current.createSVGPoint();
-      svgPoint.x = event.clientX;
-      svgPoint.y = event.clientY;
-      let { x, y } = svgPoint.matrixTransform(
+      svgPoint.x = x;
+      svgPoint.y = y;
+      let matrix = svgPoint.matrixTransform(
         ref.current.getScreenCTM().inverse()
       );
 
-      return { x, y };
+      return { x: matrix.x, y: matrix.y };
     },
-    convertPositionFromSVG: ({ x, y, unit }) => {
-      return { x: x / (unit * 10), y: y / (unit * 10) };
+    convertPositionFromSVG: (value, unit = 5) => {
+      return value / (unit * 10);
     },
-    convertPositionToSVG: (value, unit) => {
+    convertPositionToSVG: (value, unit = 5) => {
       return value * (unit * 10);
+    },
+    calculateViolinPosition: (instrumentNumber, dimensions, instrumentName) => {
+      let { startX, startY } = getStartPositions(dimensions, instrumentName);
+      let filtered = offsetMap
+        .filter((instrument) => instrument.name === instrumentName)
+        .sort((a, b) => (a.instrument_number > b.instrument_number ? 1 : -1));
+
+      const { offsetX, offsetY } = filtered[instrumentNumber];
+      return { x: startX - offsetX, y: startY - offsetY };
     },
   };
 };
@@ -23,4 +55,5 @@ export const {
   calculatePosition,
   convertPositionFromSVG,
   convertPositionToSVG,
+  calculateViolinPosition,
 } = PositionCalculator();

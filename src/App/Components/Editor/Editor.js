@@ -1,24 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SvgCanvas from '../SvgCanvas/SvgCanvas';
+import Workbar from '../Workbar/Workbar';
 import { useInstrumentReducer } from './Reducer/reducer';
 import { instrumentList } from './Reducer/instrumentList';
 import styles from './Editor.scss';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import DimensionsCalculator from '../../../lib/DimensionsCalculator';
 
-const [...instrumentTypes] = new Set(
-  instrumentList.map((instrument) => instrument.type)
-);
+const TypesButtons = (clickHandler) => {
+  const [...instrumentTypes] = new Set(
+    instrumentList.map((instrument) => instrument.type)
+  );
+
+  return instrumentTypes.map((type) => {
+    return (
+      <button onClick={() => clickHandler(type)} key={type}>
+        {type}
+      </button>
+    );
+  });
+};
 
 const Editor = () => {
-  const [dimensions, setDimenstions] = useState({
-    width: 18,
-    height: 15,
-    unit: 5,
-    zoom: 100,
-  });
-  const [state, dispatch] = useInstrumentReducer(dimensions);
-  const [activeType, setActiveType] = useState(instrumentTypes[0]);
+  const [state, dispatch] = useInstrumentReducer();
 
   const addInstrumentByInput = (data) => {
     dispatch({
@@ -31,73 +35,34 @@ const Editor = () => {
     dispatch({ type: 'ADD_BY_CLICK', payload: data });
   };
 
+  const selectInstrument = (data) => {
+    dispatch({ type: 'SELECT_INSTRUMENT', payload: data });
+  };
+
+  const updateInstrument = (data) => {
+    dispatch({ type: 'UPDATE_INSTRUMENT', payload: data });
+  };
+
+  const changeDimensions = (data) => {
+    dispatch({
+      type: data.type,
+      payload: { [data.dimension]: data.value },
+    });
+  };
+  console.log(state);
   return (
     <div className={styles.Editor}>
-      <div className={styles.Sidebar}>
-        <input
-          type="range"
-          max="200"
-          min="10"
-          step="1"
-          value={dimensions.zoom}
-          onChange={() => {
-            setDimenstions({ ...dimensions, zoom: event.target.value });
-          }}
-        />
-        <input
-          type="range"
-          max="50"
-          min="5"
-          step="1"
-          value={dimensions.width}
-          onChange={() => {
-            setDimenstions({ ...dimensions, width: event.target.value });
-          }}
-        />
-        <input
-          type="range"
-          max="50"
-          min="5"
-          step="1"
-          value={dimensions.height}
-          onChange={() => {
-            setDimenstions({ ...dimensions, height: event.target.value });
-          }}
-        />
-        {instrumentTypes.map((type) => {
-          return (
-            <button key={type} onClick={() => setActiveType(type)}>
-              {type}
-            </button>
-          );
-        })}
-        {instrumentList
-          .filter(({ type }) => type === activeType)
-          .map((instrument) => {
-            return (
-              <input
-                key={instrument.name}
-                placeholder={instrument.name}
-                type="text"
-                onChange={(event) =>
-                  addInstrumentByInput({
-                    ...instrument,
-                    count: event.target.value,
-                  })
-                }
-                value={
-                  state.instruments.filter(
-                    ({ name }) => name === instrument.name
-                  ).length
-                }
-              />
-            );
-          })}
-      </div>
+      <Workbar
+        instrumentList={instrumentList}
+        addInstrumentByInput={addInstrumentByInput}
+        updateInstrument={updateInstrument}
+        changeDimensions={changeDimensions}
+        {...state}
+      />
       <SvgCanvas
-        dimensions={DimensionsCalculator({ ...dimensions })}
+        dimensions={DimensionsCalculator({ ...state.dimensions })}
         instruments={state.instruments}
-        actions={{ addInstrumentByClick }}
+        actions={{ addInstrumentByClick, selectInstrument, updateInstrument }}
       />
     </div>
   );

@@ -1,8 +1,8 @@
-const DimensionsCalculator = ({ width, height, unit, zoom }) => {
+const DimensionsCalculator = ({ width, height, zoom }) => {
+  const unit = 5;
   return {
     width: width * (unit * 10),
     height: height * (unit * 10),
-    unit,
     zoom,
   };
 };
