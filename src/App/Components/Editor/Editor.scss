@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;
   grid-template-rows: 1fr auto;
-
+  column-gap: 1em;
   input {
     margin-bottom: 1rem;
     padding: 0.5rem 1rem;
