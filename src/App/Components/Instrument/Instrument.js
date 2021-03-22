@@ -8,7 +8,7 @@ const Instrument = (data) => {
     <circle
       cx={data.converted_x}
       cy={data.converted_y}
-      r="16"
+      r="17"
       fill="red"
       onClick={(event) => {
         event.stopPropagation();
